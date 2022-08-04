@@ -1,5 +1,8 @@
 package thanhvu.jpapractice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,13 +13,10 @@ public class ClassStudent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
     private Long classId;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "classStudent")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "classStudent")
+    //@JsonManagedReference
+    @JsonIgnore
     private Set<Student> students;
-
-    public ClassStudent(Long classId, Set<Student> students) {
-        this.classId = classId;
-        this.students = students;
-    }
 
     public ClassStudent() {
     }

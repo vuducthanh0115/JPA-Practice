@@ -3,14 +3,18 @@ package thanhvu.jpapractice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import thanhvu.jpapractice.entity.ClassStudent;
 import thanhvu.jpapractice.entity.Student;
 import thanhvu.jpapractice.service.ClassStudentService;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+@RestController
 public class ClassController {
 
     private ClassStudentService classStudentService;
@@ -20,7 +24,7 @@ public class ClassController {
         this.classStudentService = classStudentService;
     }
 
-    @PostMapping("/add")
+    @GetMapping("/add")
     public void addClass() {
         Student student1 = new Student("Tuấn");
         Student student2 = new Student("Hải");
@@ -30,8 +34,8 @@ public class ClassController {
 
         ClassStudent classStudent = new ClassStudent();
         classStudent.setStudents(students);
-        student1.setClassS(classStudent);
-        student2.setClassS(classStudent);
+        student1.setClassStudent(classStudent);
+        student2.setClassStudent(classStudent);
 
         classStudentService.add(classStudent);
     }
@@ -39,5 +43,13 @@ public class ClassController {
     @GetMapping("/get/{id}")
     public ClassStudent getClass(@PathVariable Long id) {
         return this.classStudentService.findById(id);
+    }
+    @GetMapping("/delete/{id}")
+    public void deleteClass(@PathVariable Long id) {
+        this.classStudentService.delete(id);
+    }
+    @GetMapping("/getall")
+    public List<ClassStudent> getAllClass() {
+        return this.classStudentService.findAllClass();
     }
 }
